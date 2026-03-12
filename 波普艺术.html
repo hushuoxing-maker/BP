@@ -3,70 +3,182 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>波普浪潮 · 波普艺术海报提示词古月AI智能体</title>
+<title>波普浪潮 · 高级波普艺术风格海报提示词生成器 - 古月AI智能体</title>
 <style>
-    * { margin:0; padding:0; box-sizing:border-box; font-family: "Microsoft YaHei", sans-serif; }
-    body { background: linear-gradient(135deg, #ff5f6d, #ffc371); color: #222; padding: 20px; }
-    .header { text-align: center; margin-bottom: 30px; }
-    .header h1 { font-size: 2.2rem; color: #fff; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
-    .poster-container { display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; }
-    .poster-card { background: linear-gradient(145deg, #ffeaa7, #fab1a0); border-radius: 12px; padding: 15px; width: 320px; box-shadow: 0 6px 20px rgba(0,0,0,0.2); position: relative; transition: transform 0.3s ease; }
-    .poster-card:hover { transform: scale(1.05); }
-    .main-title { font-size: 1.5rem; font-weight: bold; color: #d63031; text-align: center; margin-bottom: 8px; text-shadow: 1px 1px 2px #fff; }
-    .subtitle { font-size: 1rem; color: #2d3436; text-align: center; margin-bottom: 8px; border: 1px dashed #636e72; border-radius: 6px; padding: 4px 6px; background: rgba(255,255,255,0.3); }
-    .tags { font-size: 0.85rem; color: #0984e3; text-align: center; margin-bottom: 8px; }
-    .copy-btn { position: absolute; bottom: 12px; right: 12px; padding: 6px 10px; background: #6c5ce7; color: #fff; border: none; border-radius: 5px; cursor: pointer; transition: background 0.3s; }
-    .copy-btn:hover { background: #341f97; }
+*{box-sizing:border-box;margin:0;padding:0;font-family:"Microsoft YaHei",sans-serif;}
+body{
+  background: linear-gradient(135deg,#ff007f,#ffde00,#00ffff,#ff3d00);
+  background-size: 400% 400%;
+  animation: gradientBG 20s ease infinite;
+  min-height:100vh;
+  color:#fff;
+  padding:60px;
+}
+@keyframes gradientBG{
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
+}
+.container{max-width:1200px;margin:auto;}
+h1{text-align:center;font-size:34px;margin-bottom:40px;font-weight:700;text-shadow:2px 2px 6px rgba(0,0,0,0.7);}
+.card{
+  background:rgba(0,0,0,0.55);
+  backdrop-filter:blur(18px);
+  padding:30px;
+  border-radius:24px;
+  border: 2px solid;
+  border-image: linear-gradient(135deg,#ffde00,#ff007f,#00ffff) 1;
+  box-shadow:0 12px 28px rgba(0,0,0,0.5);
+  margin-bottom:30px;
+}
+label{font-size:14px;opacity:0.85;color:#fff;}
+input{
+  width:100%;
+  padding:14px;
+  margin-top:8px;
+  margin-bottom:18px;
+  background:rgba(0,0,0,0.35);
+  border:1px solid #ffde00;
+  border-radius:12px;
+  color:white;
+  font-size:16px;
+}
+button{
+  padding:14px 20px;
+  border:none;
+  border-radius:12px;
+  cursor:pointer;
+  font-size:16px;
+  font-weight:600;
+  background: linear-gradient(135deg,#ff007f,#ffde00);
+  color:#000;
+  box-shadow:0 5px 15px rgba(0,0,0,0.5);
+  transition:0.3s;
+}
+button:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,0.6);}
+.generate{width:100%;margin-top:10px;}
+.results{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px;}
+.promptCard{
+  background:rgba(0,0,0,0.65);
+  border-radius:20px;
+  border-left:5px solid #ff007f;
+  border-top:5px solid #ffde00;
+  padding:24px;
+  line-height:1.7;
+  position:relative;
+  box-shadow:0 10px 22px rgba(0,0,0,0.55);
+}
+.promptTitle{font-size:18px;font-weight:700;margin-bottom:10px;color:#ffde00;text-shadow:1px 1px 2px #000;}
+.promptText{white-space:pre-wrap;font-size:14px;opacity:0.95;color:#fff;}
+.copyBtn{
+  margin-top:16px;
+  background:linear-gradient(135deg,#ff007f,#ffde00);
+  padding:10px 18px;
+  border-radius:10px;
+  color:#000;
+  border:none;
+  cursor:pointer;
+  font-weight:600;
+  transition:0.3s;
+}
+.copyBtn.copied{background:rgba(100,100,100,0.8);color:#fff;transform:scale(1.05);}
+.copyBtn:hover{transform:translateY(-2px);}
 </style>
 </head>
-<body>
 
-<div class="header">
-    <h1>波普浪潮 · 波普艺术海报提示词古月AI智能体</h1>
+<body>
+<div class="container">
+<h1>波普浪潮 · 高级波普艺术风格海报提示词生成器 - 古月AI智能体</h1>
+
+<div class="card">
+<label>海报主题 / 产品名称</label>
+<input id="title" placeholder="例如：波普狂欢">
+<label>海报副标题</label>
+<input id="subtitle" placeholder="例如：潮流限量系列">
+<label>海报类型</label>
+<input id="type" placeholder="例如：品牌宣传 / 音乐现场 / 快消品推广">
+<button class="generate" onclick="generate()">生成20组提示词</button>
 </div>
 
-<div class="poster-container" id="posterContainer">
-    <!-- 海报提示词卡片由JS生成 -->
+<div id="results" class="results"></div>
 </div>
 
 <script>
-const posterData = [];
-const mainTitles = [
-    "色彩爆炸", "街头狂欢", "流行冲击", "漫画狂潮", "视觉轰炸", "POP风暴", "青年力量", "限量联名", "夸张彩印", "广告狂想", "趣味涂鸦", "复古漫画", "网点狂热", "视觉弹跳", "色块碰撞", "消费狂欢", "明星头像", "汉堡狂想", "彩色网格", "动感拟声词"
-];
-const subtitles = [
-    "限量发售", "全新上架", "热卖中", "街头限定", "青年文化", "音乐现场", "潮牌企划", "创意无限", "手绘彩印", "视觉震撼", "夸张风格", "信息轰炸", "复古怀旧", "广告风格", "爆炸效果", "色彩碰撞", "漫画分格", "点阵印刷", "拟声词放大", "重复复制"
-];
-const tags = ["POP!", "限量!", "全新!", "热卖中", "NEW", "HOT", "BANG!", "WOW!", "YOUTH", "潮流", "FUN", "ART", "视觉", "漫画", "广告", "colorful", "爆炸", "style", "graphic", "creative"];
+function rand(arr){return arr[Math.floor(Math.random()*arr.length)];}
 
-// 生成20组随机提示词
-for(let i=0;i<20;i++){
-    const mainTitle = mainTitles[i];
-    const subtitle = subtitles[i];
-    // 随机选取2-3个标签
-    const shuffledTags = tags.sort(()=>0.5-Math.random()).slice(0, Math.floor(Math.random()*2)+2);
-    posterData.push({ mainTitle, subtitle, tags: shuffledTags.join(" | ") });
-}
+let assistTexts=[
+  "POP！","限量！","全新！","热卖中！","BANG！","WOW！","POW！","必收！","潮流来袭！","最新爆款！",
+  "限量联名！","潮玩必备！","快来抢购！","新品登场！","每日推荐！","街头热潮！","艺术狂欢！","FUN！","HOT！","打CALL！"
+];
 
-const container = document.getElementById('posterContainer');
-posterData.forEach(item => {
-    const card = document.createElement('div');
-    card.className = 'poster-card';
-    card.innerHTML = `
-        <div class="main-title">${item.mainTitle}</div>
-        <div class="subtitle">${item.subtitle}</div>
-        <div class="tags">${item.tags}</div>
-        <button class="copy-btn" onclick="copyText('${item.mainTitle} | ${item.subtitle} | ${item.tags}')">复制提示词</button>
+let visualElements=[
+  "名人头像、漫画人物、商品包装、商标 logo",
+  "汉堡、可乐罐、化妆品等夸张表现",
+  "重复排列的网格图像",
+  "本戴点阵印刷效果",
+  "漫画分格",
+  "拟声词图形（BANG！POW！）",
+  "安迪·沃霍尔式色彩变体",
+  "爆炸贴、广告标签、漫画气泡组合",
+  "日常物品夸张化重复排列",
+  "彩色叠印错位效果"
+];
+
+let layoutStyles=[
+  "主标题漫画气泡突出，副标题漫画字幕条形式，辅助文字遍布画面",
+  "主标题广告大标牌，副标题价格标签，辅助文字拟声词分散",
+  "主标题居中硬边描边，副标题爆炸贴，辅助文字彩色叠印",
+  "主标题左上大字，副标题右下漫画字幕条，辅助文字随机散落",
+  "标题盘绕图像，副标题小标签贴于网格角落，辅助文字重复排列",
+  "标题贯穿画面，副标题沿边缘，辅助文字拟声词组合",
+  "主标题叠加图像上，副标题印刷条，辅助文字杂乱有序",
+  "标题右上漫画风格，副标题左下广告标签，辅助文字分散彩色叠印"
+];
+
+function generate(){
+  let title=document.getElementById("title").value.trim();
+  let subtitle=document.getElementById("subtitle").value.trim();
+  let type=document.getElementById("type").value.trim();
+  if(!title){alert("请输入海报主题 / 产品名称");return;}
+  let container=document.getElementById("results");
+  container.innerHTML="";
+  
+  for(let i=1;i<=20;i++){
+    let assistList=[];
+    let assistCount=Math.floor(Math.random()*5)+3; // 每组3~7个辅助文字
+    for(let j=0;j<assistCount;j++){assistList.push(rand(assistTexts));}
+    
+    let visual=rand(visualElements);
+    let layout=rand(layoutStyles);
+    
+    let text=`主标题：${title}
+副标题：${subtitle || "创意波普系列"}
+海报类型：${type || "波普艺术风格活动"}
+辅助文字：${assistList.join("，")}
+核心视觉元素：${visual}
+文字布局：${layout}
+风格：波普艺术风格，高纯度色彩炸裂，重复复制，信息密度高，本戴点阵肌理，漫画描边，视觉冲击力强，大众文化符号运用，戏谑与消费主义氛围浓烈。`;
+    
+    let card=document.createElement("div");
+    card.className="promptCard";
+    card.innerHTML=`
+      <div class="promptTitle">提示词 #${i}</div>
+      <div class="promptText">${text}</div>
+      <button class="copyBtn">复制提示词</button>
     `;
+    let btn=card.querySelector("button");
+    btn.onclick=function(){
+      navigator.clipboard.writeText(text);
+      btn.innerText="已复制";
+      btn.classList.add("copied");
+      setTimeout(()=>{
+        btn.innerText="复制提示词";
+        btn.classList.remove("copied");
+      },3000);
+    };
     container.appendChild(card);
-});
-
-function copyText(text){
-    navigator.clipboard.writeText(text).then(()=>{
-        alert('已复制: ' + text);
-    });
+  }
 }
 </script>
-
 </body>
 </html>
